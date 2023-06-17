@@ -1,14 +1,5 @@
-import { Show, type Component, createSignal } from "solid-js";
-const { OpenAIClient, AzureKeyCredential } = await import("@azure/openai");
-const endpoint = "hiyashichuka.openai.azure.com";
-const azureApiKey = "cc6272d82b39473bb8b9a3e234988e30";
-const client = new OpenAIClient(endpoint, new AzureKeyCredential(azureApiKey));
-const deploymentId = "hiyashi";
-let prompt = ["こんにちわ"];
-const result = await client.getCompletions(deploymentId, prompt);
-for (const choice of result.choices) {
-  console.log(choice.text);
-}
+import { For, Show, type Component, createSignal, onMount } from "solid-js";
+import { OpenAIClient, AzureKeyCredential, Choice } from "@azure/openai";
 
 // let input: any;
 // let out: string = "テキストを入力してください";
@@ -26,9 +17,29 @@ for (const choice of result.choices) {
 //   toggle();
 // };
 const App: Component = () => {
+  const endpoint = "https://hiyashichuka.openai.azure.com";
+  const azureApiKey = "cc6272d82b39473bb8b9a3e234988e30";
+  const client = new OpenAIClient(
+    endpoint,
+    new AzureKeyCredential(azureApiKey)
+  );
+  const deploymentId = "hiyashi";
+  let prompt = ["こんにちわ"];
+  const [Results, setResults] = createSignal<Choice[]>([]);
+
+  onMount(async () => {
+    const result = await client.getCompletions(deploymentId, prompt);
+    setResults(result.choices);
+    for (const choice of result.choices) {
+      console.log(choice.text);
+    }
+  });
   return (
     <>
       <a>aaaaa</a>
+      <For each={Results()} fallback={<p>Loading...</p>}>
+        {(result) => <h1>{result.text}</h1>}
+      </For>
       {/* <div>
         <input ref={input} oninput={writing} />
         <button
