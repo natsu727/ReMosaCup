@@ -14,7 +14,7 @@ const str =
 const App: Component = () => {
   // OpenAIの設定
   const endpoint = "https://hiyashichuka.openai.azure.com";
-  const azureApiKey = "cc6272d82b39473bb8b9a3e234988e30";
+  const azureApiKey = "";
   const client = new OpenAIClient(
     endpoint,
     new AzureKeyCredential(azureApiKey)
