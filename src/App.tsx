@@ -13,7 +13,7 @@ const str =
   "次に記述する文章をリフレーミングし、相手を褒める言葉に変換し言葉のみを日本語で返せ";
 const App: Component = () => {
   // OpenAIの設定
-  const endpoint = "https://hiyashichuka.openai.azure.com";
+  const endpoint = "";
   const azureApiKey = "";
   const client = new OpenAIClient(
     endpoint,
